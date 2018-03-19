@@ -1,0 +1,68 @@
+.App {
+  text-align: center;
+  font-family: "Helvetica" sans-serif;
+  background-color: #222;
+  color: white;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+  margin: 14px;
+}
+
+.App-header {
+  background-color: #3343;
+  padding: 200px;
+  color: white;
+  display: flex col;
+  justify-content: center;
+  align-items: center;
+}
+
+.App-title {
+  font-size: 2.5em;
+}
+
+.App-button {
+  padding: 10px;
+}
+
+.row {
+  font-size: large;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 80px 0 100px 0;
+  font-weight: 200;
+  min-height: 600px;
+}
+
+.section_1__genechain {
+  /* background-color: #223; */
+}
+
+.preview {
+  display: flex col wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.download {
+  display: flex wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.title {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin: 0 0 15px 15px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

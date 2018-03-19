@@ -1,0 +1,28 @@
+.section_1__genechain {
+  background-color: #223;
+}
+
+.preview {
+  display: flex col;
+}
+
+.genes_table {
+  margin-top: 30px;
+  display: inline-block;
+  max-height: 400px;
+  overflow: scroll;
+}
+
+.download {
+  display: flex wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.choices {
+  justify-content: space-around;
+}
+
+.choices > button {
+  margin: 0 30px;
+}
