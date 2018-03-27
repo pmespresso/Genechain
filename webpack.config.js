@@ -1,14 +1,16 @@
 const webpack = require("webpack");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
+const path = require('path');
+var nodeExternals = require('webpack-node-externals');
 
 const browserConfig = {
   entry: "./src/browser/index.js",
   output: {
-    path: __dirname,
-    filename: "./public/bundle.js"
+    path: __dirname + "/public",
+    filename: "bundle.js"
   },
-  devtool: "cheap-module-source-map",
+  devtool: "eval-source-map",
   module: {
     rules: [
       {
@@ -36,23 +38,21 @@ const browserConfig = {
       },
       {
         test: /js$/,
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        query: { presets: ["react-app"] }
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ],
+        exclude: /node_modules/
       }
-    ]
+    ],
   },
   plugins: [
     new ExtractTextPlugin({
       filename: "public/css/[name].css"
-    }),
-    new webpack.BannerPlugin({
-      banner: "__isBrowser__ = true;",
-      raw: true,
-      include: /\.js$/
     })
   ]
-};
+}
 
 const serverConfig = {
   entry: "./src/server/index.js",
@@ -62,7 +62,8 @@ const serverConfig = {
     filename: "server.js",
     libraryTarget: "commonjs2"
   },
-  devtool: "cheap-module-source-map",
+  externals: [nodeExternals()],
+  devtool: "eval-source-map",
   module: {
     rules: [
       {
@@ -84,19 +85,14 @@ const serverConfig = {
       },
       {
         test: /js$/,
-        exclude: /(node_modules)/,
-        loader: "babel-loader",
-        query: { presets: ["react-app"] }
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ]
       }
     ]
-  },
-  plugins: [
-    new webpack.BannerPlugin({
-      banner: "__isBrowser__ = false;",
-      raw: true,
-      include: /\.js$/
-    })
-  ]
+  }
 };
 
 module.exports = [browserConfig, serverConfig];

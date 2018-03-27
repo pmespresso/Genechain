@@ -31,9 +31,6 @@ export default class GenelinkDownload extends React.Component {
         // this.setState({
         //   filename: res.body
         // })
-
-        window.location = res.body;
-        return res.body;
       });
   }
 

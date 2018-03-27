@@ -46,7 +46,7 @@ export default class GenelinkPreview extends Component {
   render() {
 
     return (
-        <Col xs="5" sm="6" md="6" lg="6" className="preview">
+        <Col xs="12" sm="6" className="preview">
           <div className="title">
             <h4> 1. </h4><p> Preview Your Genome Analaysis</p>
           </div>

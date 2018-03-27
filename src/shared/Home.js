@@ -8,7 +8,7 @@ import FontAwesome from 'react-fontawesome';
 
 import './App.css';
 import GenelinkPreview from './GenelinkPreview';
-import StorjBuckets from './StorjBuckets';
+import Storj from './Storj';
 import GenelinkDownload from './GenelinkDownload';
 
 export default class Home extends Component {
@@ -28,7 +28,7 @@ export default class Home extends Component {
     }
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     if (localStorage.getItem('buckets')) {
       this.setState({
         buckets: JSON.parse(localStorage.getItem('buckets'))
@@ -103,56 +103,16 @@ export default class Home extends Component {
           </Row>
 
           <Row className="row section_1__genechain">
-
-
             <GenelinkPreview />
-
-            <GenelinkDownload />
-
-
+            <Storj
+              buckets={this.state.buckets || null}
+              onSelectBucket={this.onSelectBucket}
+              selectedBucketId={this.state.selectedBucketId || null}
+              storjBasicAuth={this.storjBasicAuth}
+                />
           </Row>
 
           <hr/>
-
-          <Row className="row section_2__storj">
-
-          <Col xs="12" sm="12" >
-          <h1 className="header"> This is Where You Can Safely Store Your Genes on Storj. </h1>
-          </Col>
-            <Col xs="2" sm="2" className="storj-auth">
-              <div className="title">
-                <h4> 1. </h4>  <p>  Connect to Storj </p>
-              </div>
-              <Button color="primary" onClick={this.storjBasicAuth}> Connect to Storj </Button>
-            </Col>
-            <Col xs="9" sm="9" className="storj-buckets">
-              <div className="title">
-                <h4> 2. </h4>  <p>  Choose Bucket </p>
-              </div>
-              <div id="list-buckets-area">
-
-                <ul>
-                {
-                  this.state.buckets.length > 0
-                  ?
-                  <StorjBuckets selected={this.state.selectedBucketId} buckets={this.state.buckets} onSelectBucket={this.onSelectBucket} />
-                  :
-                  null
-                }
-                </ul>
-              </div>
-
-              <hr />
-            </Col>
-            <Col xs="12" sm="12" className="upload">
-              <div className="title">
-                <h4> 3. </h4>  <p> Upload! </p>
-              </div>
-              <Button color="info"> Upload </Button>
-              <Button color="link" style={{display: 'none'}}> View on Storj </Button>
-            </Col>
-          </Row>
-
         </div>
       </div>
     )

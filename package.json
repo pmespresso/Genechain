@@ -1,21 +1,25 @@
 {
-  "name": "react-ssr",
+  "name": "genechain",
   "version": "0.1.0",
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start-dev": "NODE_ENV=development webpack -w & NODE_ENV=development nodemon server.js",
+    "start-dev": "NODE_ENV=development webpack -w & NODE_ENV=development nodemon server.js bundle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-transform-arrow-functions": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
     "@terebentina/react-popover": "^2.0.0",
     "assert": "^1.4.1",
     "asyncawait": "^1.0.6",
+    "babel-preset-2017": "0.0.0",
     "body-parser": "^1.18.2",
     "bootstrap": "^4.0.0",
+    "commonjs": "0.0.1",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.15.3",
@@ -23,8 +27,10 @@
     "fs-extra": "^5.0.0",
     "genomelink-node": "^0.1.2",
     "isomorphic-fetch": "^2.2.1",
+    "kad-localstorage": "0.0.9",
     "lodash.orderby": "^4.6.0",
     "node-time-ago": "^1.0.0",
+    "npm": "^5.8.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-download-link": "^2.1.3",
@@ -33,18 +39,27 @@
     "react-transition-group": "^2.2.1",
     "reactstrap": "^4.8.0",
     "serialize-javascript": "^1.4.0",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "storj-lib": "^8.7.2",
+    "webpack-dev-server": "^3.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
-    "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^3.0.1",
+    "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^2.1.2",
     "file-loader": "^0.11.2",
     "nodemon": "^1.11.0",
     "postcss-loader": "^2.0.6",
-    "webpack": "^3.1.0"
+    "shebang-loader": "0.0.1",
+    "webpack": "^3.1.0",
+    "webpack-node-externals": "^1.6.0"
   }
 }
