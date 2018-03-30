@@ -32,6 +32,13 @@ var client;
 var STORJ_EMAIL = process.env.STORJ_EMAIL;
 var STORJ_PASSWORD = process.env.STORJ_PASSWORD;
 
+var STORJ_MNEMONIC = process.env.STORJ_MNEMONIC || generateMnemonic();
+
+var storjCredentials = {
+  email: STORJ_EMAIL,
+  password: STORJ_PASSWORD
+};
+
 /* ****************************************************************************************** */
 
 // Components
