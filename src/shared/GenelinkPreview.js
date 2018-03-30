@@ -2,6 +2,35 @@ import React, { Component } from 'react';
 import { Table, Badge, Col, Row, Button } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
 import './GenelinkPreview.css';
+import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+
+
+
+const rowStyle = {
+  minHeight: 500,
+  display: 'flex col',
+  padding: 100,
+  alignItems: 'center',
+  justifyContent: 'spaceBetween'
+}
+
+const subheaderStyle = {
+  fontSize: 45,
+  fontWeight: 350,
+  textAlign: 'center'
+}
+
+const textStyle = {
+  fontSize: 20
+}
+
+const buttonStyle = {
+  backgroundColor: "transparent",
+  borderColor: "#048A81",
+  color: "#048A81",
+  height: 60,
+  width: 200
+}
 
 export default class GenelinkPreview extends Component {
 
@@ -16,6 +45,11 @@ export default class GenelinkPreview extends Component {
   componentDidMount = () => {
     console.log(window.__genes__);
 
+    if(typeof window !== 'undefined') {
+      window.WOW = require('wowjs');
+    }
+    new WOW.WOW().init();
+
     if (window.__genes__) {
       window.localStorage.setItem('reports', JSON.stringify(window.__genes__));
     } else {
@@ -28,6 +62,19 @@ export default class GenelinkPreview extends Component {
     this.setState({
       reports: genes ? genes : window.__genes__
     });
+
+    Events.scrollEvent.register('begin', function () {
+      console.log("begin", arguments);
+    });
+
+    Events.scrollEvent.register('end', function () {
+      console.log("end", arguments);
+    });
+  }
+
+  componentWillUnmount = () => {
+    Events.scrollEvent.remove('begin');
+    Events.scrollEvent.remove('end');
   }
 
 
@@ -46,17 +93,18 @@ export default class GenelinkPreview extends Component {
   render() {
 
     return (
-        <Col xs="12" sm="6" className="preview">
-          <div className="title">
-            <h4> 1. </h4><p> Preview Your Genome Analaysis</p>
-          </div>
-          <div className="choices">
-            <Button color="success" onClick={this.genelinkAuth}> Connect to GenomeLink  </Button>
-          </div>
+
+      <Row className="row genelink-preview" style={rowStyle}>
+
+        <Col xs="2" sm="2" className="offset"></Col>
+        <Col xs="8" sm="8" className="wow slideInUp" data-wow-duration="2s">
+          <h2 style={subheaderStyle}> Preview Your Genome Analysis</h2>
+          <Button onClick={this.genelinkAuth} style={buttonStyle}  > Connect to GenomeLink  </Button>
+
           {
             this.state.reports
             ?
-            <Table responsive bordered className="genes_table">
+            <Table responsive className="genes_table">
               <thead className="genes_header">
                 <tr>
                   <th>Phenotype Name</th>
@@ -86,7 +134,11 @@ export default class GenelinkPreview extends Component {
             :
             null
           }
+
         </Col>
+
+      </Row>
+
     );
   }
 

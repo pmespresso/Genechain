@@ -4,45 +4,74 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import FontAwesome from 'react-fontawesome';
 import StorjBuckets from './StorjBuckets';
 
-export default class Storj extends Component {
+const rowStyle = {
+  minHeight: 500,
+  display: 'flex col',
+  padding: 100
+}
 
-  constructor(props) {
-    super(props);
-  }
+const subheaderStyle = {
+  fontSize: 45,
+  fontWeight: 350,
+  textAlign: 'center'
+}
+
+const textStyle = {
+  fontSize: 20
+}
+
+const tableStyle = {
+  marginTop: 80,
+  maxWidth: '100%',
+  maxHeight: '100%'
+}
+
+const buttonStyle = {
+  backgroundColor: "transparent",
+  borderColor: "#048A81",
+  color: "#048A81",
+  height: 60,
+  width: 200
+}
+
+const centerStyle = {
+  margin: '0 auto'
+}
+
+export default class Storj extends Component {
 
   render() {
     return (
-      <Col xs="6" sm="6">
-        <p className="header"> 2. Safely Upload to Storj </p>
+      <Row style={rowStyle}>
+      <Col sm="1" md="1" className="offset"></Col>
+        <Col xs="10" sm="10" md="10">
+          <p className="header" style={subheaderStyle}> Safely Upload to Storj </p>
 
-        <Button color="primary" onClick={this.props.storjBasicAuth}> Connect to Storj </Button>
-        <div className="storj-buckets">
-          <div className="title">
-            <p>  Choose Bucket </p>
-          </div>
-          <div id="list-buckets-area">
+          <Button onClick={this.props.storjBasicAuth} style={buttonStyle}> Connect to Storj </Button>
+          <div className="storj-buckets">
+              <h3 style={textStyle}>  Choose Bucket </h3>
+            <div id="list-buckets-area">
 
-            <ul>
-            {
-              this.props.buckets.length > 0
-              ?
-              <StorjBuckets selected={this.props.selectedBucketId} buckets={this.props.buckets} onSelectBucket={this.props.onSelectBucket} />
-              :
-              null
-            }
-            </ul>
-          </div>
+              <ul>
+              {
+                this.props.buckets.length > 0
+                ?
+                <StorjBuckets selected={this.props.selectedBucketId} buckets={this.props.buckets} onSelectBucket={this.props.onSelectBucket} />
+                :
+                null
+              }
+              </ul>
+            </div>
 
-          <hr />
-        </div>
-        <Col xs="12" sm="12" className="upload">
-          <div className="title">
-            <h4> 3. </h4>  <p> Upload! </p>
+            <hr />
           </div>
-          <Button color="info"> Upload </Button>
-          <Button color="link" style={{display: 'none'}}> View on Storj </Button>
+          <Col sm="1" md="1" className="offset"></Col>
+          <Col xs="10" sm="10" md="10" className="upload">
+            <Button style={buttonStyle}> Upload </Button>
+            <Button style={buttonStyle}> View on Storj </Button>
+          </Col>
         </Col>
-      </Col>
+      </Row>
     );
   }
 }
