@@ -67,7 +67,7 @@ export default class Storj extends Component {
           </div>
           <Col sm="1" md="1" className="offset"></Col>
           <Col xs="10" sm="10" md="10" className="upload">
-            <Button style={buttonStyle}> Upload </Button>
+            <Button style={buttonStyle}> Upload </Button> <p> For this demo you can only upload to this test account, because Storj itself is limiting new account creation at the moment due to network congestion. In the future you'll be able to log in to your own Storj account. </p>
             <Button style={buttonStyle}> View on Storj </Button>
           </Col>
         </Col>
