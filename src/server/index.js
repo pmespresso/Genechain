@@ -8,9 +8,9 @@ import { renderToString } from "react-dom/server";
 import { StaticRouter, matchPath } from "react-router-dom";
 import serialize from "serialize-javascript";
 import routes from "../shared/routes";
-var fs = require('fs-extra');
-var assert = require('assert');
-var promise = require('promise');
+import fs from 'fs-extra';
+import assert from 'assert';
+import promise from 'promise';
 var session = require('express-session');
 require('dotenv').config();
 
@@ -25,14 +25,10 @@ import storj from 'storj-lib';
 import storj_utils from 'storj-lib/lib/utils';
 var api = 'https://api.storj.io';
 var client;
-// var KEYRING_PASS = 'somepassword';
-// var keyring = storj.KeyRing('./');
 
 // Storj variables
 var STORJ_EMAIL = process.env.STORJ_EMAIL;
 var STORJ_PASSWORD = process.env.STORJ_PASSWORD;
-
-var STORJ_MNEMONIC = process.env.STORJ_MNEMONIC || generateMnemonic();
 
 var storjCredentials = {
   email: STORJ_EMAIL,
@@ -201,6 +197,15 @@ app.post('/save', async function(req, res) {
 
 /**********************************STORJ********************************** */
 
+/**
+ * Simple endpoint to make sure your STORJ_EMAIL and STORJ_PASSWORD environment
+ * variables are on your .env file
+ */
+app.get('/user/retrieve', function(req, res) {
+  separator();
+  console.log('Retrieving basic auth credentials...');
+  res.status(200).send(storjCredentials);
+});
 
 app.get('/user/authenticate/user-pass', function(req, res) {
   separator();
@@ -480,7 +485,6 @@ app.get('/files/download', function(req, res) {
     });
   });
 });
-
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is listening");
