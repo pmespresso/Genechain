@@ -30,6 +30,7 @@
     "kad-localstorage": "0.0.9",
     "lodash.orderby": "^4.6.0",
     "node-time-ago": "^1.0.0",
+    "node-uuid": "^1.4.8",
     "npm": "^5.8.0",
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.6.2",
@@ -44,7 +45,7 @@
     "reactstrap": "^4.8.0",
     "serialize-javascript": "^1.4.0",
     "source-map-support": "^0.4.15",
-    "storj-lib": "^8.7.2",
+    "storj-lib": "6.3.2",
     "webpack-dev-server": "^3.1.1",
     "wowjs": "^1.1.3"
   },

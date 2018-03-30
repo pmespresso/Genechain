@@ -3,6 +3,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const autoprefixer = require("autoprefixer");
 const path = require('path');
 var nodeExternals = require('webpack-node-externals');
+var storj = require('storj-lib');
 
 const browserConfig = {
   entry: "./src/browser/index.js",
@@ -11,6 +12,7 @@ const browserConfig = {
     filename: "bundle.js"
   },
   devtool: "eval-source-map",
+
   module: {
     rules: [
       {
