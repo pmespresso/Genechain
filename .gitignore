@@ -2,4 +2,6 @@
 .env
 *.txt
 genes.json
+*.hot-update.js
+*.hot-update.json
 node_modules

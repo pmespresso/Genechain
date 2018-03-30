@@ -2,7 +2,7 @@
   "presets": ["react", "env", "stage-0"],
   "env": {
     "test": {
-      "plugins": ["transform-runtime"]
+      "plugins": ["transform-runtime", "react-hot-loader/babel"]
     }
   }
 }

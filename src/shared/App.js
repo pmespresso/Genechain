@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import routes from "./routes";
 import "./App.css";
+import { hot } from 'react-hot-loader';
 
 const App = () => {
   return (
@@ -11,4 +12,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default hot(module)(App);
