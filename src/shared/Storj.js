@@ -40,6 +40,16 @@ const centerStyle = {
 
 export default class Storj extends Component {
 
+  handleUpload = () => {
+    console.log('here');
+
+    fetch('/files/upload')
+      .then((res) => {
+        console.log('file upload res => ', res);
+        this.refs.file = res.body.file;
+      });
+  }
+
   render() {
     return (
       <Row style={rowStyle}>
@@ -53,13 +63,13 @@ export default class Storj extends Component {
             <div id="list-buckets-area">
 
               <ul>
-              {
-                this.props.buckets.length > 0
-                ?
-                <StorjBuckets selected={this.props.selectedBucketId} buckets={this.props.buckets} onSelectBucket={this.props.onSelectBucket} />
-                :
-                null
-              }
+                {
+                  this.props.buckets.length > 0
+                  ?
+                  <StorjBuckets selected={this.props.selectedBucketId} buckets={this.props.buckets} onSelectBucket={this.props.onSelectBucket} />
+                  :
+                  null
+                }
               </ul>
             </div>
 
@@ -67,7 +77,7 @@ export default class Storj extends Component {
           </div>
           <Col sm="1" md="1" className="offset"></Col>
           <Col xs="10" sm="10" md="10" className="upload">
-            <Button style={buttonStyle}> Upload </Button>
+            <Button style={buttonStyle} onClick={this.handleUpload}> Upload </Button>
             <Button style={buttonStyle}> View on Storj </Button>
           </Col>
         </Col>
