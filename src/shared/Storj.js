@@ -40,6 +40,33 @@ const centerStyle = {
 
 export default class Storj extends Component {
 
+  handleUpload = () => {
+    console.log('here');
+
+    if (localStorage.reports) {
+      console.log('hellooooo => ', localStorage.reports);
+      fetch('/reports/save', {
+        method: 'POST',
+        body: JSON.parse(localStorage.reports),
+        credentials: 'same-origin',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then((res) => {
+          if (res) {
+            console.log('in here mother: ', res.json);
+            fetch('/files/upload')
+              .then((res) => {
+                console.log('file upload res => ', res);
+                this.refs.file = res.body.file;
+              });
+          }
+        })
+    }
+  }
+
   render() {
     return (
       <Row style={rowStyle}>
@@ -53,13 +80,13 @@ export default class Storj extends Component {
             <div id="list-buckets-area">
 
               <ul>
-              {
-                this.props.buckets.length > 0
-                ?
-                <StorjBuckets selected={this.props.selectedBucketId} buckets={this.props.buckets} onSelectBucket={this.props.onSelectBucket} />
-                :
-                null
-              }
+                {
+                  this.props.buckets.length > 0
+                  ?
+                  <StorjBuckets selected={this.props.selectedBucketId} buckets={this.props.buckets} onSelectBucket={this.props.onSelectBucket} />
+                  :
+                  null
+                }
               </ul>
             </div>
 
@@ -67,7 +94,9 @@ export default class Storj extends Component {
           </div>
           <Col sm="1" md="1" className="offset"></Col>
           <Col xs="10" sm="10" md="10" className="upload">
-            <Button style={buttonStyle}> Upload </Button> <p> For this demo you can only upload to this test account, because Storj itself is limiting new account creation at the moment due to network congestion. In the future you'll be able to log in to your own Storj account. </p>
+            <p className="lead"> For this demo you can only upload to this test account, because Storj itself is limiting new account creation at the moment due to network congestion. In the future you'll be able to log in to your own Storj account. </p>
+
+            <Button style={buttonStyle} onClick={this.handleUpload}> Upload </Button>
             <Button style={buttonStyle}> View on Storj </Button>
           </Col>
         </Col>

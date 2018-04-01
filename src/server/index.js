@@ -25,6 +25,8 @@ import storj from 'storj-lib';
 import storj_utils from 'storj-lib/lib/utils';
 var api = 'https://api.storj.io';
 var client;
+var KEYRING_PASS = 'somepassword';
+var keyring = storj.KeyRing('./');
 
 // Storj variables
 var STORJ_EMAIL = process.env.STORJ_EMAIL;
@@ -177,24 +179,6 @@ app.get('/reports', async function(req, res) {
   }
 });
 
-app.post('/save', async function(req, res) {
-  assert(req.body, "req.body null/undefined");
-
-  // console.log('server POST body -> ', JSON.stringify(req.body));
-  try {
-    console.log('req body -> ', req.body);
-
-    var target = fs.createWriteStream('./genes.txt');
-
-    var received = 0;
-
-
-  } catch (err) {
-    console.error('err outside -> ', err);
-  }
-});
-
-
 /**********************************STORJ********************************** */
 
 /**
@@ -253,6 +237,24 @@ app.get('/buckets/list', function(req, res) {
     res.status(200).send(buckets);
   });
 });
+
+app.post('/reports/save', function(req, res) {
+  console.log('req.body -> ', req.body);
+  if (req.body) {
+    let reports = req.body;
+
+    // write reports to a file
+    fs.writeFile('./genes.json', reports, (err) => {
+      if (err) {
+        console.log('error => ', err);
+      } else {
+        console.log('file has been saved');
+        res.status(200).send();
+      }
+    });
+  }
+});
+
 //
 // /**
 //  * Uploads a file to a bucket. For simplicity, the file and bucket are
@@ -485,6 +487,60 @@ app.get('/files/download', function(req, res) {
     });
   });
 });
+
+/**
+ * Deterministically generates filekey to upload/download file based on
+ * mnemonic stored on keyring. This means you only need to have the mnemonic
+ * in order to upload/download on different devices. Think of the mnemonic like
+ * an API key i.e. keep it secret! keep it safe!
+ */
+function getFileKey(user, bucketId, filename) {
+  console.log('Generating filekey...')
+  generateMnemonic();
+  var realBucketId = storj_utils.calculateBucketId(user, bucketId);
+  var realFileId = storj_utils.calculateFileId(bucketId, filename);
+  var filekey = keyring.generateFileKey(realBucketId, realFileId);
+  console.log('Filekey generated!');
+  return filekey;
+}
+
+
+/**
+ * This generates a mnemonic that is used to create deterministic keys to
+ * upload and download buckets and files.
+ * This puts the mnemonic on your keyring (only one mnemonic is held per
+ * keyring) and also writes the mnemonic to your local .env file.
+ */
+function generateMnemonic() {
+  console.log('Attempting to retrieve mnemonic');
+  var mnemonic = keyring.exportMnemonic();
+  var newMnemonic;
+
+  if (mnemonic) {
+    console.log('Mnemonic already exists', mnemonic);
+  } else {
+    console.log('Mnemonic doesn\'t exist or new keyring');
+    try {
+      keyring.importMnemonic(process.env.STORJ_MNEMONIC);
+    } catch(err) {
+      console.log('process.env.STORJ_MNEONIC', err);
+      try {
+        keyring.importMnemonic(keyring.generateDeterministicKey());
+      } catch(err) {
+        console.log('generateDeterministicKey', err);
+      }
+    }
+  }
+
+  console.log('Mnemonic successfully retrieved/generated and imported');
+  if (!process.env.STORJ_MNEMONIC) {
+    console.log('Mnemonic not saved to env vars. Saving...');
+    // Write mnemonic to .env file
+    fs.appendFileSync('./.env', `STORJ_MNEMONIC="${mnemonic || newMnemonic}"`);
+    console.log('Mnemonic written to .env file. Make sure to add this to heroku config variables with \'heroku config:set STORJ_MNEMONIC="<VALUE FROM .ENV FILE>\'');
+    return;
+  }
+}
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Server is listening");
