@@ -239,11 +239,12 @@ app.get('/buckets/list', function(req, res) {
 });
 
 app.post('/reports/save', function(req, res) {
-  if (req.body.reports) {
-    var reports = JSON.parse(req.body.reports);
+  console.log('req.body -> ', req.body);
+  if (req.body) {
+    let reports = req.body;
 
     // write reports to a file
-    fs.writeFile('./public/genes.json', reports, (err) => {
+    fs.writeFile('./genes.json', reports, (err) => {
       if (err) {
         console.log('error => ', err);
       } else {
@@ -252,11 +253,7 @@ app.post('/reports/save', function(req, res) {
       }
     });
   }
-})
-
-
-
-
+});
 
 //
 // /**
