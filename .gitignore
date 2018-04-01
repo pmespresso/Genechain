@@ -5,3 +5,4 @@ genes.json
 *.hot-update.js
 *.hot-update.json
 node_modules
+/key.ring
